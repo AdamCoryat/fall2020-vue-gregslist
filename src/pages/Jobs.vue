@@ -1,26 +1,26 @@
 <template>
-<div id="houses" class="container-fluid">
-  <div class="row my-3">
-    <div class="col" id="form">
-       <form @submit.prevent="createHouse" class="form-inline">
+  <div id="jobs" class="container-fluid">
+    <div class="row my-3">
+      <div class="col" id="form">
+        <form @submit.prevent="createHouse" class="form-inline">
           <div class="form-group p-1">
-            <label class="mr-1" for="bedrooms">Bedrooms</label>
+            <label class="mr-1" for="company">Company</label>
             <input
-              v-model="newHouse.bedrooms"
+              v-model="newJob.company"
               type="text"
-              name="bedrooms"
-              id="bedrooms"
+              name="company"
+              id="company"
               class="form-control"
               placeholder="Bedrooms..."
             />
           </div>
           <div class="form-group p-1">
-            <label class="mr-1" for="bathrooms">Bathrooms</label>
+            <label class="mr-1" for="jobTitle">Job Title</label>
             <input
-              v-model="newHouse.bathrooms"
+              v-model="newJob.jobTitle"
               type="number"
-              name="bathrooms"
-              id="bathrooms"
+              name="jobTitle"
+              id="jobTitle"
               class="form-control"
               placeholder="Bathrooms..."
             />
@@ -28,7 +28,7 @@
           <div class="form-group p-1">
             <label class="mr-1" for="levels">Levels</label>
             <input
-              v-model="newHouse.levels"
+              v-model="newJob.levels"
               type="number"
               name="levels"
               id="levels"
@@ -39,7 +39,7 @@
           <div class="form-group p-1">
             <label class="mr-1" for="imgUrl">Image URL</label>
             <input
-              v-model="newHouse.imgUrl"
+              v-model="newJob.imgUrl"
               type="url"
               name="imgUrl"
               id="imgUrl"
@@ -50,7 +50,7 @@
           <div class="form-group p-1">
             <label class="mr-1" for="year">Year</label>
             <input
-              v-model="newHouse.year"
+              v-model="newJob.year"
               type="number"
               name="year"
               id="year"
@@ -63,7 +63,7 @@
             <div class="form-group p-1">
             <label class="mr-1" for="price">Price</label>
             <input
-              v-model="newHouse.price"
+              v-model="newJob.price"
               type="number"
               name="price"
               id="price"
@@ -74,7 +74,7 @@
             <div class="form-group p-1">
             <label class="mr-1" for="description">Description</label>
             <input
-              v-model="newHouse.description"
+              v-model="newJob.description"
               type="text"
               name="description"
               id="description"
@@ -84,43 +84,15 @@
           </div>
           <button type="submit" class="btn btn-outline-success">Add House</button>
         </form>
-
+      </div>
     </div>
   </div>
-  <div class="row">
-    <house v-for="house in houses" :key="house._id" :house="house"/>
-  </div>
-</div>
 </template>
 
 <script>
-import House from "../components/House.vue"
 export default {
-  name: "houses",
-  mounted() {
-  this.$store.dispatch('getAllHouses')    
-  },
-  data(){
-    return {
-      newHouse: {}
-    }
-  },
-  computed: {
-    houses(){
-      return this.$store.state.houses
-    }
-  },
-  methods: {
-    createHouse(){
-      this.$store.dispatch("createHouse", this.newHouse)
-      for(let key in this.newHouse){
-        this.newHouse[key] = null
-      }
-    }
-  },
-  components: {
-    House
-  }
+  name: "jobs",
+
 
 }
 </script>
