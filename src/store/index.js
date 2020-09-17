@@ -38,6 +38,18 @@ export default new Vuex.Store({
     },
     removeHouse(state, id){
       state.houses = state.houses.filter(h => h.id !=id)
+    },
+    setJobs(state, jobs){
+      state.jobs = jobs
+    },
+    addJob(state, job){
+      state.jobs.push(job)
+    },
+    setActiveJob(state, job){
+      state.activeJob = job
+    }, 
+    removeJob(state, id){
+      state.jobs = state.jobs.filter(j => j.id != id)
     }
   },
   actions: {
@@ -135,6 +147,42 @@ export default new Vuex.Store({
         commit("setActiveHouse", res.data)
       } catch (error) {
         console.error(error)
+      }
+    },
+    async getAllJobs({commit}){
+      try {
+        let res = await api.get('jobs')
+        commit("setJobs", res.data.data)
+        console.log(res)
+      } catch (error) {
+        
+      }
+    },
+    async getJobById({commit}, id){
+      try {
+        let res = await api.get('jobs/' + id)
+        commit("setActiveJob", res.data.data)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async createJob({commit}, newJob){
+      try {
+        let res = await api.post('jobs', newJob)
+        commit('addJob', res.data.data)
+        commit('setActiveJob', res.data.data)
+        router.push({name: "JobDetails", params: { id: res.data.data._id}})
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async deleteJob({commit}, id){
+      try {
+        await api.delete('jobs/' + id)
+        commit('removeJob', id)
+        commit('setActiveJob', {})
+      } catch (error) {
+        console.error(error);
       }
     }
   }

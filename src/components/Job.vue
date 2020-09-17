@@ -5,6 +5,7 @@
       <div class="card">
           <h4 class="card-title">Title:{{job.company}} - ${{job.jobTitle}}</h4>
       </div>
+    </div>
   </router-link>
 </div>
   

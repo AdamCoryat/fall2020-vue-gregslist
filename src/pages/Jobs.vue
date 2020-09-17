@@ -2,7 +2,7 @@
   <div id="jobs" class="container-fluid">
     <div class="row my-3">
       <div class="col" id="form">
-        <form @submit.prevent="createHouse" class="form-inline">
+        <form @submit.prevent="createJob" class="form-inline">
           <div class="form-group p-1">
             <label class="mr-1" for="company">Company</label>
             <input
@@ -18,59 +18,35 @@
             <label class="mr-1" for="jobTitle">Job Title</label>
             <input
               v-model="newJob.jobTitle"
-              type="number"
+              type="text"
               name="jobTitle"
               id="jobTitle"
               class="form-control"
-              placeholder="Bathrooms..."
+              placeholder="Job Title..."
             />
           </div>
           <div class="form-group p-1">
-            <label class="mr-1" for="levels">Levels</label>
+            <label class="mr-1" for="levels">Hours</label>
             <input
-              v-model="newJob.levels"
+              v-model="newJob.hours"
               type="number"
-              name="levels"
-              id="levels"
+              name="hours"
+              id="hours"
               class="form-control"
-              placeholder="Levels..."
+              placeholder="Hours..."
             />
           </div>
           <div class="form-group p-1">
-            <label class="mr-1" for="imgUrl">Image URL</label>
+            <label class="mr-1" for="rate">Rate</label>
             <input
-              v-model="newJob.imgUrl"
-              type="url"
-              name="imgUrl"
-              id="imgUrl"
+              v-model="newJob.rate"
+              type="number"
+              name="rate"
+              id="rate"
               class="form-control"
-              placeholder="Image Url..."
+              placeholder="Rate..."
             />
           </div>
-          <div class="form-group p-1">
-            <label class="mr-1" for="year">Year</label>
-            <input
-              v-model="newJob.year"
-              type="number"
-              name="year"
-              id="year"
-              class="form-control"
-              placeholder="Year..."
-              min="1700"
-              max="2020"
-            />
-          </div>
-            <div class="form-group p-1">
-            <label class="mr-1" for="price">Price</label>
-            <input
-              v-model="newJob.price"
-              type="number"
-              name="price"
-              id="price"
-              class="form-control"
-              placeholder="Price..."
-            />
-            </div>
             <div class="form-group p-1">
             <label class="mr-1" for="description">Description</label>
             <input
@@ -82,16 +58,44 @@
               placeholder="Description..."
             />
           </div>
-          <button type="submit" class="btn btn-outline-success">Add House</button>
+          <button type="submit" class="btn btn-outline-success">Add Job</button>
         </form>
       </div>
+    </div>
+    <div class="row" id="data">
+      <job v-for="job in jobs" :key="job._id" :job="job" />
     </div>
   </div>
 </template>
 
 <script>
+import Job from "../components/Job.vue"
 export default {
   name: "jobs",
+  mounted(){
+    this.$store.dispatch('getAllJobs')
+  },
+  data(){
+    return {
+      newJob: {}
+    }
+  },
+  computed: {
+    jobs(){
+      return this.$store.state.jobs
+    }
+  },
+  methods: {
+    createJob(){
+      this.$store.dispatch("createJob", this.newJob)
+      for(let key in this.newJob){
+        this.newJob[key] = null
+      }
+    }
+  },
+  components: {
+    Job
+  }
 
 
 }
